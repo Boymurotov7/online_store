@@ -1,0 +1,32 @@
+const express = require('express')
+const sequelize = require('./db.js')
+const config = require("./config.js")
+const models = require('./models/models')
+const cors = require('cors')
+const fileUpload = require('express-fileupload')
+const path = require("path");
+const router = require('./routers/index')
+const errorHandler = require('./middlewares/ErrorHandlingmiddleware')
+const PORT = process.env.PORT || 5000
+const User = require('./models/models')
+const app = express()
+app.use(cors())
+app.use(express.json())
+app.use(fileUpload({}))
+app.use('/api',router)
+app.use( errorHandler)
+
+//app.listen(PORT,() => console.log(`Server started on port ${PORT}`))
+
+
+const start = async () => {
+	try{
+		//console.log(sequelize)
+		//await sequelize.authenticate()
+		app.listen(PORT,() => console.log(`Server started on port ${PORT}`))
+	}catch(e){
+		console.log(e)
+	}
+}
+
+start()
